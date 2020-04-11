@@ -1,0 +1,72 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+footer {
+  padding-top: 0;
+  text-align: right;
+  padding-bottom: 2rem;
+}
+
+.card-img {
+  max-width: 3rem;
+}
+
+.content-dis {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.content-dis .card-title {
+  flex-grow: 1;
+}
+
+.card-contain {
+  display: flex;
+}
+
+.card {
+  min-width: 50vw;
+}
+
+.card-title {
+  max-width: 40vw;
+  font-size: medium;
+}
+
+.single-card {
+  max-width: 40vw;
+}
+
+.card-content p {
+  word-wrap: normal;
+  max-width: 40vw;
+}
+
+.jersey-desc p span{
+  font-weight: 600;
+  display: block;
+  margin-bottom: .5rem;
+  margin-top: .5rem;
+}
+
+nav, .page-footer {
+  background-color: #1e88e5;
+}
+
+.brand-logo {
+  left: 0 !important;
+}
+
+@media only screen and (max-width: 600px){
+  nav .brand-logo{
+    display: none;
+  }
+
+}

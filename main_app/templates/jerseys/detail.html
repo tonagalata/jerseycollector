@@ -1,0 +1,109 @@
+{% extends 'base.html' %} {% block content %}
+<h2>{{jersey.team_name}}'s Jersey</h2>
+
+<div class="card single-card">
+  <div class="card-content">
+    <div style="display: flex; flex-direction: column;">
+      <span class="card-title">{{ jersey.team_name }}</span>
+      <div class="card-image">
+        {% for photo in jersey.photo_set.all %}
+        <img
+        class="single-card"
+        src="{{photo.url}}"
+        alt="{{jersey.team_name}} jersey"
+        style="max-height: 3rem; max-width: 3rem;"
+        />
+        {% empty %}
+        <form action="{% url 'add_photo' jersey.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+          {% csrf_token %}
+          <input type="file" name="photo-file">
+          <br><br>
+          <input type="submit" class="btn" value="Upload Photo">
+        </form>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="jersey-desc">
+      <p><span>Country:</span>{{ jersey.country }}</p>
+      <p><span>Jersey Colors:</span> {{ jersey.jersey_colors }}</p>
+      <p><span>Jersey Description:</span> {{ jersey.jersey_description}}</p>
+
+      <span>Year:</span> {{jersey.year_added}}
+    </div>
+    <div class="card-action">
+      <a href="{% url 'jersey_update' jersey.id %}" class="btn">Edit</a>
+      <a href="{% url 'jersey_delete' jersey.id %}" class="btn">Delete</a>
+    </div>
+  </div>
+</div>
+<script>
+  let dateEl = document.getElementById("id_year_added");
+  M.Datepicker.init(dateEl, {
+    format: "yyyy-mm-dd",
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  });
+
+  let selectEl = document.getElementById('id_country');
+  M.FormSelect.init(selectEl);
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let elems = document.querySelectorAll("#collapsible");
+    let instances = M.Collapsible.init(elems, {
+      popout: true
+    });
+    console.log(elems);
+  });
+</script>
+
+
+<hr/>
+
+
+<div class="row">
+  <div class="col s6">
+    <h3>{{ jersey.team_name }}'s players</h3>
+    {% if jersey.players.count %} 
+    {% for player in jersey.players.all %}
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+          <span>{{ player.name }}</span><span> {{ player.number }}</span>
+        </span>
+        <div class="card-action">
+          <form action="{% url 'disassoc_player' jersey.id player.id %}" method="post">
+            {% csrf_token%}
+            <button type="submit" class="btn red">Remove</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %} {% else %}
+    <h5>No player :(</h5>
+    {% endif %}
+  </div>
+  <div class="col s6">
+    <h3>Available player</h3>
+    {% if players.count %} 
+    {% for player in players.all %}
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+          <span>{{ player.name }}</span><span> {{ player.number }}</span>
+        </span>
+        <div class="card-action">
+          <form action="{% url 'assoc_player' jersey.id player.id %}" method="post">
+            {% csrf_token%}
+            <button type="submit" class="btn">Add</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %} {% else %}
+    <h5>{{ jersey.team_name }} Already has All players Available</h5>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

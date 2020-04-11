@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if object_list.count == 0 %}
+    <h3 class="red-text">There are no Players</h3>
+    <a href="{% url 'players_create' %}">Add a Player</a>
+{% else %}
+    <div style="display: flex;">    
+        {% for player in object_list %}
+        <div class="card" style="width: 20rem; margin: 1rem;">
+            <a href="{% url 'players_detail' player.id %}">
+                <div class="card-content">
+                    <span class="card-title" style="flex-wrap: wrap;">{{player.name}}</span>
+                    <span>{{player.number}}</span>
+                    {{player.photo_player.all}}
+                    <img
+                    class="single-card"
+                    src="{{player.photo_player.first.url}}"
+                    alt="{{player.name}}"
+                    style="max-height: 3rem; max-width: 3rem;"
+                    />
+                    <form action="{% url 'add_player_photo' player.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+                      {% csrf_token %}
+                      <input type="file" name="photo-file">
+                      <br><br>
+                      <input type="submit" class="btn" value="Upload Photo">
+                    </form>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}

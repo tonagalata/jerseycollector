@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if object %}
+  <h4>Edit <span class="teal-text">{{ object.name }}</span></h4>
+{% else %}
+<h2>Add Jersey</h2>
+{% endif %}
+<form class="browser-default" action="" method="post" style="margin-bottom: 2rem;">
+  {% csrf_token %}
+  <table>
+    <div class="browser-default">{{ form.as_table }}</div>
+  </table>
+  <input type="submit" value="Submit" class="btn">
+</form>
+<script>
+  let dateEl = document.getElementById("id_year_added");
+  M.Datepicker.init(dateEl, {
+    format: "yyyy-mm-dd",
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  });
+
+  let selectEl = document.getElementById('id_country');
+    M.FormSelect.init(selectEl);
+  
+  let selectEl2 = document.getElementById('id_jersey_type');
+    M.FormSelect.init(selectEl2);
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let elems = document.querySelectorAll("#collapsible");
+    let instances = M.Collapsible.init(elems, {
+      popout: true
+    });
+    console.log(selectEl);
+  });
+</script>
+{% endblock %}

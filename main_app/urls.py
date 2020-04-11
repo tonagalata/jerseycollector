@@ -1,0 +1,31 @@
+from django.urls import path
+from . import views
+
+urlpatterns = [
+  path('', views.home, name='home'),
+  path('about/', views.about, name='about'),
+  path('jerseys/', views.jerseys_index, name='index'),
+  path('jerseys/<int:jersey_id>/', views.jerseys_detail, name='detail'),
+  path('jerseys/create/', views.JerseyCreate.as_view(), name='jerseys_create'),
+  path('jerseys/<int:pk>/update/', views.JerseyUpdate.as_view(), name='jersey_update'),
+  path('jerseys/<int:pk>/delete/', views.JerseyDelete.as_view(), name='jersey_delete'),
+  path('jerseys/<int:jersey_id>/add_championship/', views.add_championship, name="add_championship"),
+  path('players/', views.PlayerList.as_view(), name='players_index'),
+  path('players/<int:pk>/', views.PlayerDetail.as_view(), name='players_detail'),
+  path('players/<int:pk>/update/', views.PlayerUpdate.as_view(), name='players_update'),
+  path('players/<int:pk>/delete/', views.PlayerDelete.as_view(), name='players_delete'),
+  path('players/create/', views.PlayerCreate.as_view(), name='players_create'),
+  path('sponsor/', views.SponsorList.as_view(), name='sponsors_index'),
+  path('sponsors/<int:pk>/', views.SponsorDetail.as_view(), name='sponsors_detail'),
+  path('sponsors/<int:pk>/update/', views.SponsorUpdate.as_view(), name='sponsors_update'),
+  path('sponsors/<int:pk>/delete/', views.SponsorDelete.as_view(), name='sponsors_delete'),
+  path('sponsors/create/', views.SponsorCreate.as_view(), name='sponsors_create'),
+  path('jersey/<int:jersey_id>/assoc_player/<int:player_id>/', views.assoc_player, name='assoc_player'),
+  path('jersey/<int:jersey_id>/disassoc_player/<int:player_id>/', views.disassoc_player, name='disassoc_player'),
+  path('jersey/<int:jersey_id>/assoc_sponsor/<int:sponsor_id>/', views.assoc_sponsor, name='assoc_sponsor'),
+  path('jersey/<int:jersey_id>/disassoc_sponsor/<int:sponsor_id>/', views.disassoc_sponsor, name='disassoc_sponsor'),
+  path('jersey/<int:jersey_id>/add_photo/', views.add_photo, name='add_photo'),
+  path('players/<int:player_id>/add_player_photo/', views.add_player_photo, name='add_player_photo'),
+  path('sponsors/<int:sponsor_id>/add_sponsor_photo/', views.add_sponsor_photo, name='add_sponsor_photo'),
+  path('accounts/signup/', views.signup, name='signup'),
+]
